@@ -3,14 +3,20 @@ hide circle
 hide empty members
 
 class Reparatiekaart {
-    - klant: String 
+    - klant: Klant 
     - voertuigType: VoertuigType
     - reparatie: ArrayList<String>
+    - ontvangstDatum: DateTime
     - tijd: Number 
 }
 
 enum VoertuigType <<Enumeration>> {
     Fiets 
     Scooter 
+}
+
+class Klant {
+    - naam: String
+    - telefoonnummer: Number
 }
 @enduml

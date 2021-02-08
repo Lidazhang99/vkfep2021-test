@@ -7,8 +7,12 @@ actor "Medewerker" as MDW
 rectangle "Reparatiekaart Systeem" {
     usecase "reparatiekaart aanmaken" as UC1
     usecase "reparatiekaart verwijderen" as UC2
+    usecase "reparatieOverzicht tonen" as UC3
+    usecase "reparatieOverzicht sluiten" as UC4
 }
 
 MDW -- UC1
 MDW -- UC2
+MDW -- UC3
+MDW -- UC4
 @enduml

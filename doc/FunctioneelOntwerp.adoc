@@ -30,9 +30,16 @@ Verder moet worden opgemerkt dat inmiddels is gebleken dat het attribuut __prijs
 
 ==== User Story #7 
 
-**User Story (#7): Als medewerker wil ik een totaal overzicht kunnen inzien van alle reparaties zodat ik kan actuele informatie kan verkrijgen over reparaties**
+**User Story (#7): Als medewerker wil ik een totaal overzicht kunnen inzien van alle reparaties zodat ik actuele informatie kan verkrijgen over reparaties**
 
-**HUISWERK:** Analyseer deze user story en bepaal de impact op het domein model.
+image::./../assets/images/overzichtReparatiesSchets.jpg[Schets, 300, 300]
+
+Uit deze User Story gebruiken we nog steeds de klasse **Reparatiekaart** om het overzicht van alle reparaties te tonen. In User story 5 worden deze attributen ingevuld waarna deze hier worden getoond. Verder was opgemerkt dat op de "reparatiekaart" verstrekt door de opdrachtgever ook nog een attribuut stond over het ontvangstdatum. Deze is vervolgens toegevoegd, zodat de medewerker ook weet wanneer het voertuig in ontvangst is genomen. 
+
+Ook komt er uit deze schets een nieuwe user story uit voort: "Als medewerker wil ik een totaal overzicht kunnen inzien van alle klanten die een reparatie hebben zodat ik informatie over mijn klanten kan verkrijgen" Van de klant weten we alleen de naam en deze moeten we ook kunnen bereiken voor bepaalde omstandigheden. Dit zou in principe ook in de reparatiekaart kunnen als extra attribuut: telefoonnummer. 
+
+Als we naderhand meer attributen over de klant moeten verkrijgen is het beter om deze in een aparte klasse te onderhouden. Hierdoor zorg je voor een betere scheiding tussen de klassen, waardoor complexe onderhoud en dubbele data voorkomen kan worden.
+
 
 === Het Domein Model
 
@@ -40,20 +47,24 @@ Het resultaat van de analyse van de User Stories is het volgende Domein Model.
 
 image::./../assets/images/DomeinModel.png[Domein Model]
 
+Nader inzien is toch de keuze gemaakt om Klant als een aparte klasse op te nemen. De naam van de klant zal in het overzicht getoond worden, maar zal een relatie/link leggen met de Klant klasse. Deze uitwerking zal veel samenhang en overeenkomsten  hebben met user story 5 en 7.  
 
 == Klasse Reparatiekaart
 
-**TODO:** __Inleidend verhaal voor dit hoofdstuk__
+Deze klasse komt voort uit user story 5. Hier gaan we dieper op deze klasse in.
 
 === Toestandsdiagram
 
-Op basis van User Story #5 kunnen we de transitie van de start node naar de een toestand die we voor nu "bestaat" hebben genoemd verantworden.
+Op basis van User Story #5 kunnen we de transitie van de start node naar de een toestand die we voor nu "bestaat" hebben genoemd verantwoorden.
+
+Op basis van User Story #7 kunnen we de transitie van de toestand: "bestaat" naar een nieuwe toestand "getoond" verantwoorden. Hierbij wordt de overzicht van alle reparaties opgehaald en getoond. Deze toestand wordt vervolgens gesloten door de reparatieOverzicht te sluiten.
 
 Omdat elke toestand minimaal een uitgaande transitie vereist en de life cycle van de instantie van een object ook eindig zou moeten zijn is het verantwoord om een transitie "reparatiekaart verwijderen" aan het diagram toe te voegen.
 
 Het resulterende toestandsdiagram voor instanties van de klasse Reparatiekaart komt dan als volgt eruit te zien:
 
 image::./../assets/images/TD-Reparatiekaart.png[State Diagram - Reparatiekaart]
+
 [%autowidth, options=header]
 |===
 | Toestand | Kenmerk
@@ -68,6 +79,8 @@ image::./../assets/images/UC-Reparatiekaart.png[Use Case Diagram - Reparatiekaar
 
 Als we de Use Cases uitzetten tegen de onderkende User Stories valt op te maken dat er nog geen User Story is voor de Use Case "Reparatiekaart verwijderen". Dit is een issue en zou met de opdrachtgever besproken moeten worden.
 
+Verder hebben we ook nog de Use Case "reparatieOverzicht sluiten". Dit betreft een kleine Use Case dat gaat om het afsluiten van het overzicht. Dit kan door het overzicht weg te klikken. 
+
 Maar voor deze sprint waarin we de User Stories #5 en #7 willen gaan realiseren is deze Use Case niet vereist en heeft dus geen impact op de voortgang van deze sprint.
 
 [%autowidth, options=header]
@@ -75,6 +88,8 @@ Maar voor deze sprint waarin we de User Stories #5 en #7 willen gaan realiseren 
 | - | US #5 | US# 7 | US #8 | US #9 | US #12 | US #13
 | UC: Reparatiekaart aanmaken | x | | | | | 
 | UC: Reparatiekaart verwijderen | | | | | |
+| UC: ReparatieOverzicht tonen | | x | | | |
+| UC: ReparatieOverzicht sluiten | | | | | |
 |===
 
 
@@ -105,6 +120,38 @@ a|
 !===
 
 ! Trigger ! Stap 3a in Main Scenario [niet alle velden zijn gevuld]
+! Scenario 
+a! . Systeem
+.. Systeem toont foutmelding
+.. Systeem keert terug naar stap 1 van het Main Scenario
+
+!===
+
+|=== 
+
+
+[%autowidth]
+|===
+| Use Case Nr: | 2
+| Use Case Naam: | ReparatieOverzicht tonen
+| Actor: | Medewerker
+| Samenvatting: | De actor vraagt om een overzicht van alle geregistreerde reparaties met de naam van de klant [GET], de soort fiets [GET], de reparatie [GET], OntvangstDatum [GET] en geschatteTijd [GET]. Het systeem haalt vervolgens deze hierbovenstaande informatie op en toont het. 
+| Pre-conditie: | n.v.t.
+| Main Scenario: 
+a|  [start=1]
+. Systeem vraagt om het overzicht te tonen.
+. Actor geeft aan om het overzicht te tonen.
+. Systeem toont overzicht 
+  met de velden: naam klant [GET], soort fiets [GET], reparatie [GET], ontvangstDatum [GET] en geschatteTijd [GET])
+
+
+| Post-conditie | Het reparatieOverzicht is getoond en bevindt zich in het toestand "getoond"
+| Alternatief Scenario 
+a| 
+[%autowidth, cols="2,1"]
+!===
+
+! Trigger ! Stap 3 in Main Scenario [Geen reparatiekaart aanwezig]
 ! Scenario 
 a! . Systeem
 .. Systeem toont foutmelding

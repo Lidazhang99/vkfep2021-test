@@ -3,6 +3,8 @@
 state Repartiekaart {
     [*] --> bestaat : <<Medewerker>> reparatiekaart aanmaken 
     bestaat --> [*] : <<Medewerker>> reparatiekaart verwijderen
+    bestaat --> getoond: <<Medewerker>> reparatieOverzicht tonen
+    getoond --> [*]: <<Medewerker>> reparatieOverzicht sluiten
 }
 
 @enduml
